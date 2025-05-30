@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: temporal-test-job
+  namespace: lab-tests
+spec:
+  template:
+    metadata:
+      labels:
+        app: temporal-test-job
+    spec:
+      containers:
+      - name: temporal-test-job
+        image: myacr.azurecr.io/lab-tests/temporal-dotnet:latest
+        env:
+          - name: TEMPORAL_URL
+            value: "temporal-frontend.mynamespace.svc.cluster.local:7233"
+      restartPolicy: Never
+  backoffLimit: 4
